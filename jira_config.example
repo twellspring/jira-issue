@@ -10,30 +10,31 @@ customfield_11136 = {"alias":"dummy"}
 squad = Alpha
 key = DC
 #board = Datacenter Scrum ( ID 96 )
+board_id = 96
 
 [ps]
 type = Support
 labels = ProdSupport
-board_id = 96
 close = True
 work = 15m
 
 [ds]
 type = Support
 labels = DevSupport 
-board_id = 96
 close = True 
 
 [bug]
 type = Bug
-board_id = 96
 
 [ops]
 type = Ops Request
-board_id = 96
 
 [opsc]
 type = Ops Request
-board_id = 96
 close = true
+
+[opsmore]
+type = Ops Request
+lables = development tag2 tag3
+
 
