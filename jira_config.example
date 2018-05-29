@@ -1,0 +1,39 @@
+[DEFAULT]
+username = jsmity@mycompany.com
+password = xxxxxxxxxxx
+#token = xxxxxxxxxxxxxxx
+server = https://mycompany.atlassian.net
+
+assignee = jsmith
+customfield_11135 = {"alias":"squad","type":"list"}
+customfield_11136 = {"alias":"dummy"}
+squad = Alpha
+key = DC
+#board = Datacenter Scrum ( ID 96 )
+
+[ps]
+type = Support
+labels = ProdSupport
+board_id = 96
+close = True
+work = 15m
+
+[ds]
+type = Support
+labels = DevSupport 
+board_id = 96
+close = True 
+
+[bug]
+type = Bug
+board_id = 96
+
+[ops]
+type = Ops Request
+board_id = 96
+
+[opsc]
+type = Ops Request
+board_id = 96
+close = true
+
