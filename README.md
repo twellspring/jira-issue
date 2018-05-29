@@ -7,17 +7,17 @@ Configuration
 =====
 The configuration is stored in ~/.jira_config.  This file uses `ini` format with a DEFAULT section for items like the Jira credentials and custom sections that can be used to create templates that can be easily called.  Here are the common fields for the configuration file:
 
-    username, token|password, server = Data needed to connect to github.
+username, token|password, server = Data needed to connect to github.<br>
 
-    assignee = github assignee ID
-    board = Board name to add this issue to ( or use board_id ).
-    board_id = Scrum board to add this issue to ( or use board).
-    issue = issue key to process ( leave blank to create a new issue).
-    key = the key for the project that issues will be created in.
-    type = Issue type to create.
-    labels = labels to assign.  Labels can be in comma or space separated format.  Labels can not contain spaces or commas.
-    close = Close the issue?
-    work = Time Spent string for the amount of work done (Examples: 30m, 1h ).  This can only be specified of close is true ( or else will be ignored).
+assignee = github assignee ID<br>
+board = Board name to add this issue to ( or use board_id ).<br>
+board_id = Scrum board to add this issue to ( or use board).<br>
+issue = issue key to process ( leave blank to create a new issue).<br>
+key = the key for the project that issues will be created in.<br>
+type = Issue type to create.<br>
+labels = labels to assign.  Labels can be in comma or space separated format.  Labels can not contain spaces or commas.<br>
+close = Close the issue?<br>
+work = Time Spent string for the amount of work done (Examples: 30m, 1h ).  This can only be specified of close is true ( or else will be ignored).<br>
 
 **Custom Fields**<br>
 Custom fields can be mapped to an alias name for more readable configuration.  The following examples maps customfile_11135 to the alias `squad` and then assigns it the value of `Alpha`.
@@ -25,7 +25,7 @@ Custom fields can be mapped to an alias name for more readable configuration.  T
     customfield_11135 = {"alias":"squad","type":"list"}
     squad = Alpha
 
-Custom Field Notes<br>
+Custom Field     Notes<br>
 * Custom fields can only be configured in the DEFAULT section. 
 * An alias can be specified in any section
 * A custom field can be configured but not used ( i.e. an the alias field not specified).  In this case, the custom field will not be set
