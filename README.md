@@ -3,11 +3,13 @@ jira-issue
 
 This script allows users to quickly create Jira issues from the command line.  The script is python3 based and uses the [jira-python](https://github.com/pycontribs/jira). The goal is to minimize the effor needed to put in simple Jira issues.
 
+If prerequisites are not automatically installed, run:  `sudo pip3 install jira python-editor`
+
 Configuration
 =====
 The configuration is stored in ~/.jira_config.  This file uses `ini` format with a DEFAULT section for items like the Jira credentials and custom sections that can be used to create templates that can be easily called.  Here are the common fields for the configuration file:
 
-username, token|password, server = Data needed to connect to github.<br>
+username, token, server = Data needed to connect to github.  Go to https://id.atlassian.com/manage/api-tokens to create a token.<br>
 
 assignee = github assignee ID<br>
 board = Board name to add this issue to ( or use board_id ).<br>

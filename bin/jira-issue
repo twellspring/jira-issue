@@ -58,6 +58,8 @@ def parse_command_args(custom_fields):
     """
     parser = argparse.ArgumentParser(
         prog=sys.argv[0],
+        description=
+        'See https://github.com/twellspring/jira-issue setup instructions and usage examples.',
         formatter_class=
         lambda prog: argparse.HelpFormatter(prog, max_help_position=35))
     parser.add_argument(
