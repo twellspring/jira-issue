@@ -17,7 +17,7 @@ key = the key for the project that issues will be created in.<br>
 type = Issue type to create.<br>
 labels = labels to assign.  Labels can be in comma or space separated format.  Labels can not contain spaces or commas.<br>
 close = Close the issue?<br>
-work = Time Spent string for the amount of work done (Examples: 30m, 1h ).  This can only be specified of close is true ( or else will be ignored).<br>
+work = Time Spent string for the amount of work done (Examples: 30m, 1h ).<br>
 
 **Custom Fields**<br>
 Custom fields can be mapped to an alias name for more readable configuration.  The following examples maps customfile_11135 to the alias `squad` and then assigns it the value of `Alpha`.
@@ -40,6 +40,9 @@ Create an *Ops Request* and close it with 1.5 hours worked <br>
 
 Create a *Support* request with the tag ProdSupport and 30 minutes worked <br>
 ```jira-issue -u ps -w 30m Investigate deploy failure on core-api-prod-1a```
+
+Update the issue DC-1788 with hours <br>
+``` jira-issue -w 30m -i DC-1788 x ```
 
 Update the issue DC-1788 with hours and close <br>
 ``` jira-issue -w 30m -c -i DC-1788 x ```

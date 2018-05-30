@@ -37,13 +37,16 @@ def parse_file_args(section):
     """Parse config file ~/.jira_config
     """
     env_file = os.path.expanduser("~/.jira_config")
-    config = configparser.ConfigParser()
-    config.read(env_file)
-    if config.has_section(section) or section == 'DEFAULT':
-        config = config.items(section)
-    else:
-        print('Config file does not have section: ' + section)
-        sys.exit(1)
+    try:
+        config = configparser.ConfigParser()
+        config.read(env_file)
+        if config.has_section(section) or section == 'DEFAULT':
+            config = config.items(section)
+        else:
+            print('Config file does not have section: ' + section)
+            sys.exit(1)
+    except (configparser.Error) as err:
+        sys.exit(err.message)
 
     config_dict = dict(config)
 
@@ -196,7 +199,7 @@ def create_issue(args, jira):
         sys.exit(err)
 
 
-def add_to_sprint(issue_key, args, jira):
+def add_to_sprint(issue_key, issue, args, jira):
     """  Add issue to active sprint
     """
     board_id = args.get('board_id', None)
@@ -221,12 +224,30 @@ def add_to_sprint(issue_key, args, jira):
         print("Could not find an active sprint in: " + args.get('board'))
         return None
 
+    sprint_info = issue.raw['fields'][args.get('sprint_field',
+                                               'customfield_10016')]
+    if sprint_name in str(sprint_info):
+        return
+
     try:
         jira.add_issues_to_sprint(sprint_id, [issue_key])
     except JIRAError as err:
         print(issue_key + ': ' + err.text)
         return None
     print(issue_key + ": Added to sprint " + sprint_name)
+
+
+def add_worklog(issue_key, args, jira):
+    """ Add work to an issue
+    """
+    try:
+        work = args.get('work')
+        user = args.get('assignee')
+        jira.add_worklog(issue_key, timeSpent=work, user=user)
+    except JIRAError as err:
+        print(issue_key + ': ' + err.text)
+        return None
+    print(issue_key + ": added work " + work)
 
 
 def close_issue(issue_key, args, jira):
@@ -245,7 +266,7 @@ def close_issue(issue_key, args, jira):
             print(issue_key +
                   ': Close option not available.  Is it already closed?')
             return None
-        jira.transition_issue(issue_key, closed_id, worklog=args.get('work'))
+        jira.transition_issue(issue_key, closed_id)
     except JIRAError as err:
         print(err.text)
         sys.exit(err.status_code)
@@ -288,8 +309,11 @@ def main():
     #     print(field, ' ', issue.raw['fields'][field])
     # sys.exit()
 
+    if args.get('work', False):
+        add_worklog(issue_key, args, jira)
+
     if args.get('board', False) or args.get('board_id', False):
-        add_to_sprint(issue_key, args, jira)
+        add_to_sprint(issue_key, issue, args, jira)
 
     if str2bool(args.get('close', False)):
         close_issue(issue_key, args, jira)
