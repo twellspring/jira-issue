@@ -25,6 +25,9 @@ close = True
 
 [bug]
 type = Bug
+board_id =
+assigneee =
+# blank value for board_id and assingee unsets the values from DEFAULT.  In this case it means the new issue will not be added to the current sprint or have an assignee.
 
 [ops]
 type = Ops Request

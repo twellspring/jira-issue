@@ -7,7 +7,7 @@ If prerequisites are not automatically installed, run:  `sudo pip3 install jira 
 
 Configuration
 =====
-The configuration is stored in ~/.jira_config.  This file uses `ini` format with a DEFAULT section for items like the Jira credentials and custom sections that can be used to create templates that can be easily called.  Here are the common fields for the configuration file:
+The configuration is stored in ~/.jira_config.  This file uses `ini` format with a DEFAULT section for items like the Jira credentials and custom sections that can be used to create templates that can be easily called.  When a custom section is called, the DEFAULT is merged with the custom section and custom section items override DEFAULT. Here are the common fields for the configuration file:
 
 username, token, server = Data needed to connect to github.  Go to https://id.atlassian.com/manage/api-tokens to create a token.<br>
 
@@ -27,7 +27,7 @@ Custom fields can be mapped to an alias name for more readable configuration.  T
     customfield_11135 = {"alias":"squad","type":"list"}
     squad = Alpha
 
-Custom Field     Notes<br>
+Custom Field Notes<br>
 * Custom fields can only be configured in the DEFAULT section. 
 * An alias can be specified in any section
 * A custom field can be configured but not used ( i.e. an the alias field not specified).  In this case, the custom field will not be set

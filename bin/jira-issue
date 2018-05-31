@@ -177,11 +177,12 @@ def create_issue(args, jira):
         'issuetype': {
             'name': args.get('type'),
         },
-        'assignee': {
-            'name': args.get('assignee')
-        },
         'labels': args.get('labels', [])
     }
+
+    if args.get('assignee', False):
+        issue_dict['assignee'] = {}
+        issue_dict['assignee']['name'] = args.get('assignee')
 
     for field, field_data in args.get('custom_fields', {}).items():
         value = args.get(field_data['alias'])
@@ -273,7 +274,7 @@ def close_issue(issue_key, args, jira):
         print(err.text)
         sys.exit(err.status_code)
 
-    print(issue_key + ': Closed with ' + work + ' work')
+    print(issue_key + ': Closed')
 
 
 def str2bool(test_string):
