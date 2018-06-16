@@ -80,6 +80,7 @@ def parse_command_args(custom_fields):
         const=True,
         dest='get_description',
         help='Input Description in editor')
+    parser.add_argument('-e', '--epic', dest='epic_id', help='Epic ID')
     parser.add_argument(
         '-i',
         '--issue',
@@ -202,6 +203,18 @@ def create_issue(args, jira):
         sys.exit(err)
 
 
+def add_to_epic(issue_key, args, jira):
+    """ Add issue to epic
+    """
+    epic_id = args.get('epic_id')
+    try:
+        jira.add_issues_to_epic(epic_id, [issue_key])
+    except JIRAError as err:
+        print(issue_key + ': ' + err.text)
+        return None
+    print(issue_key + ": Added to epic " + epic_id)
+
+
 def add_to_sprint(issue_key, issue, args, jira):
     """  Add issue to active sprint
     """
@@ -224,7 +237,8 @@ def add_to_sprint(issue_key, issue, args, jira):
             sprint_id = sprint.id
             break
     if not sprint_name:
-        print("Could not find an active sprint in: " + args.get('board'))
+        print("Could not find an active sprint in: " +
+              str(args.get('board'), args.get('board_id', '')))
         return None
 
     sprint_info = issue.raw['fields'][args.get('sprint_field',
@@ -253,11 +267,10 @@ def add_worklog(issue_key, args, jira):
     print(issue_key + ": added work " + work)
 
 
-def close_issue(issue_key, args, jira):
+def close_issue(issue_key, jira):
     """ Close Jira Issue
     """
     try:
-        work = args.get('work')
         closed_id = None
         transitions = jira.transitions(issue_key)
         for transition in transitions:
@@ -300,9 +313,12 @@ def main():
     if args.get('issue_key', False):
         issue_key = args.get('issue_key')
         issue = jira.issue(issue_key)
-        issue_open = str(issue.fields.status) in ('Open', 'Reopened')
-        if not issue_open:
-            print(issue_key + ": Issue is not open so can not be modified")
+
+        issue_closed = str(issue.fields.status) in args.get(
+            'closed_status', ['Closed', 'Done'])
+        if issue_closed:
+            print(issue_key +
+                  ": Issue is in a closed status so can not be modified")
             sys.exit(1)
     else:
         issue = create_issue(args, jira)
@@ -312,6 +328,9 @@ def main():
     #     print(field, ' ', issue.raw['fields'][field])
     # sys.exit()
 
+    if args.get('epic_id', False):
+        add_to_epic(issue_key, args, jira)
+
     if args.get('work', False):
         add_worklog(issue_key, args, jira)
 
@@ -319,7 +338,7 @@ def main():
         add_to_sprint(issue_key, issue, args, jira)
 
     if str2bool(args.get('close', False)):
-        close_issue(issue_key, args, jira)
+        close_issue(issue_key, jira)
 
 
 if __name__ == "__main__":

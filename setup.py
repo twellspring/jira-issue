@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="jira-issue",
-    version="0.0.4",
+    version="0.0.5",
     author="Todd Wells",
     author_email="todd@wells.ws",
     description="Quickly create jira issues from the command line",

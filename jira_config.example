@@ -1,43 +1,58 @@
 [DEFAULT]
 username = jsmith@mycompany.com
-password = xxxxxxxxxxx
-#token = xxxxxxxxxxxxxxx
+token = xxxxxxxxxxxxxxx
 server = https://mycompany.atlassian.net
-
 assignee = jsmith
 customfield_11135 = {"alias":"squad","type":"list"}
-customfield_11136 = {"alias":"dummy"}
 squad = Alpha
 key = DC
 #board = Datacenter Scrum ( ID 96 )
 board_id = 96
+sprint_field = customfield_10016
+closed_status = ['Closed', 'Done']
 
 [ps]
 type = Support
 labels = ProdSupport
+
+[psc]
+type = Support
+labels = ProdSupport
 close = True
-work = 15m
+
+[ss]
+type = Support
+labels = SalesSupport,security
+
+[ssc]
+type = Support
+labels = SalesSupport,security
+close = True
 
 [ds]
 type = Support
-labels = DevSupport 
-close = True 
+labels = DevSupport
 
-[bug]
+[dsc]
+type = Support
+labels = DevSupport
+close = True
+
+[b]
 type = Bug
+assignee =
 board_id =
-assigneee =
-# blank value for board_id and assingee unsets the values from DEFAULT.  In this case it means the new issue will not be added to the current sprint or have an assignee.
 
 [ops]
 type = Ops Request
+assignee =
+board_id =
 
 [opsc]
 type = Ops Request
-close = true
+close = True
 
-[opsmore]
-type = Ops Request
-lables = development tag2 tag3
-
-
+[t]
+type = Task
+assignee =
+board_id =
