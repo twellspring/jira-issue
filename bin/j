@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+syntax(){
+cat << EOF
+j is a short hand method of running jira-issue to quickly
+create and update jira issues.
+
+SYNTAX 1: j config time title 
+  Create a new issue with a given config, hours and title
+  example: j psc 30 analytics server high IO
+
+SYNTAX 2: j issue time [c] 
+  Add time to and/or close an existing issue
+  example: j DC-1234 30m c
+EOF
+
+exit
+}
+
+# Test if first arg is a configuration profile or a jira story
+case $1 in
+  -h|--help|'')
+    syntax
+    ;;
+  *-*)
+    ONE="-i $1"
+    TITLE=x
+    ;;
+  *)
+    ONE="-u $1"
+    ;;
+esac
+shift
+
+# if no time suffix given assume minutes
+# If 0 dont add time
+case "$1" in 
+  *[a-z])
+    TWO="-w $1"
+    ;;
+  *)
+    TWO="-w $1m"
+    ;;
+esac
+shift
+
+# Close the issue?
+case "$1" in 
+  c|close) 
+    THREE='-c'
+    shift
+    ;;
+  *)
+esac  
+
+
+echo jira-issue $ONE $TWO $THREE $@ $TITLE
+jira-issue $ONE $TWO $THREE $@ $TITLE
